@@ -2,7 +2,7 @@
 
 namespace app\index\controller;
 
-class Index {
+class Index extends Base{
 
     public function index() {
         // 指定允许其他域名访问

@@ -8,7 +8,8 @@ class User extends Base {
 
     public function index() {
         $page=input('get.page',1);
-        $userlist = db('user')->limit(5)->page($page)->order('id desc')->select();
+        $pageSize=input('get.pageSize',10);
+        $userlist = db('user')->limit(5)->limit($page,$pageSize)->order('id desc')->select();
         $count=db('user')->count();
         $data['userlist']=$userlist;
         $data['count']=$count;

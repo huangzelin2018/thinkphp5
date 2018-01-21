@@ -2,24 +2,40 @@
 
 namespace app\index\controller;
 
+use think\Db;
+
 class User extends Base {
 
     public function index() {
-        $userlist = db('user')->limit(10)->select();
-        echo json_encode($userlist);
+        $userlist = db('user')->limit(5)->order('id desc')->select();
+        $count=db('user')->count();
+        $data['userlist']=$userlist;
+        $data['count']=$count;
+        echo json_encode($data);
     }
 
     public function edit() {
-        $id = input('get.id');
-        $json = db('user')->where(['id' => $id])->find();
-        echo json_encode($json);
+        $user = input('post.');
+        db('user')->update($user);
+        echo json_encode('ok');
     }
 
     public function add() {
         $user = input('post.');
-        echo json_encode($_POST);die;
         db('user')->insert($user);
         echo json_encode('ok');
+    }
+
+    public function delete() {
+        $id = input('get.id');
+        db('user')->where(['id' => $id])->delete();
+        echo json_encode('ok');
+    }
+
+    public function get() {
+        $id = input('get.id');
+        $json = db('user')->where(['id' => $id])->find();
+        echo json_encode($json);
     }
 
 }

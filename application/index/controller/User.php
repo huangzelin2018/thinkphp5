@@ -7,7 +7,8 @@ use think\Db;
 class User extends Base {
 
     public function index() {
-        $userlist = db('user')->limit(5)->order('id desc')->select();
+        $page=input('get.page',1);
+        $userlist = db('user')->limit(5)->page($page)->order('id desc')->select();
         $count=db('user')->count();
         $data['userlist']=$userlist;
         $data['count']=$count;
